@@ -19,7 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
-  font-family: "Microsoft JhengHei", "微軟正黑體", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+  font-family: "Microsoft JhengHei", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
