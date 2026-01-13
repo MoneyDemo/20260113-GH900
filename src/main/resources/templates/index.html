@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO 應用程式</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 TODO 管理系統</h1>
+        
+        <div class="header">
+            <h2>所有任務</h2>
+            <a th:href="@{/new}" class="btn btn-primary">+ 新增 TODO</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(todos)}" class="empty-state">
+            <p>目前沒有任何 TODO 項目</p>
+            <a th:href="@{/new}" class="btn btn-primary">建立第一個 TODO</a>
+        </div>
+
+        <table th:if="${!#lists.isEmpty(todos)}" class="todo-table">
+            <thead>
+                <tr>
+                    <th>標題</th>
+                    <th>描述</th>
+                    <th>狀態</th>
+                    <th>建立時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="todo : ${todos}">
+                    <td><strong th:text="${todo.title}">標題</strong></td>
+                    <td th:text="${todo.description}">描述</td>
+                    <td>
+                        <span class="status-badge" 
+                              th:classappend="${todo.status == 'COMPLETED'} ? 'status-completed' : (${todo.status == 'IN_PROGRESS'} ? 'status-in-progress' : 'status-pending')"
+                              th:text="${todo.status == 'COMPLETED' ? '已完成' : (todo.status == 'IN_PROGRESS' ? '進行中' : '待處理')}">
+                            狀態
+                        </span>
+                    </td>
+                    <td>
+                        <span class="created-at" th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}">時間</span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a th:href="@{/edit/{id}(id=${todo.id})}" class="btn btn-success">編輯</a>
+                            <a th:href="@{/delete/{id}(id=${todo.id})}" 
+                               class="btn btn-danger"
+                               onclick="return confirm('確定要刪除此 TODO 嗎？');">刪除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
