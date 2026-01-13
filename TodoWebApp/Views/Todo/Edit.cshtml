@@ -1,0 +1,39 @@
+@model TodoWebApp.Models.TodoItem
+
+@{
+    ViewData["Title"] = "編輯待辦事項";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>@ViewData["Title"]</h2>
+        
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">項目標題</label>
+                <input asp-for="Title" class="form-control" placeholder="請輸入待辦事項內容" required />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="IsCompleted" class="form-check-input" type="checkbox" />
+                <label asp-for="IsCompleted" class="form-check-label">
+                    已完成
+                </label>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">儲存</button>
+                <a asp-action="Index" class="btn btn-secondary">取消</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
